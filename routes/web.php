@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SlideController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -25,27 +26,59 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/dash', [AreaAdminController::class, 'index'])->middleware('auth');
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout']);
-
+Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/product', [ProductController::class, 'index'])->middleware('auth');
-Route::get('/product-table', [ProductController::class, 'table'])->middleware('auth');
-Route::post('/product-store', [ProductController::class, 'store'])->middleware('auth');
-Route::get('/product-edit-{id}', [ProductController::class, 'edit'])->middleware('auth');
-Route::put('/product-update', [ProductController::class, 'update'])->middleware('auth');
-Route::delete('/product-del-{id}', [ProductController::class, 'destroy'])->middleware('auth');
+Route::middleware('staff')->group(function () {
+    // Route Product
+    Route::get('/product', [ProductController::class, 'index'])->middleware('auth');
+    Route::get('/product-create', [ProductController::class, 'create'])->middleware('auth');
+    Route::post('/product-store', [ProductController::class, 'store'])->middleware('auth');
+    Route::get('/product-edit-{id}', [ProductController::class, 'edit'])->middleware('auth');
+    Route::put('/product-update', [ProductController::class, 'update'])->middleware('auth');
+    // Route Slide
+    Route::get('/slide', [SlideController::class, 'index'])->middleware('auth');
+    Route::get('/slide-create', [SlideController::class, 'create'])->middleware('auth');
+    Route::post('/slide-store', [SlideController::class, 'store'])->middleware('auth');
+    Route::get('/slide-edit-{id}', [SlideController::class, 'edit'])->middleware('auth');
+    Route::put('/slide-update', [SlideController::class, 'update'])->middleware('auth');
+    // Route Dashboard
+    Route::get('/dash', [AreaAdminController::class, 'index']);
+});
 
-Route::get('/approval', [ApprovalController::class, 'index'])->middleware('auth');
-Route::put('/approval-update', [ApprovalController::class, 'update'])->middleware('auth');
-
-Route::get('/category', [CategoryController::class, 'index'])->middleware('auth');
-
-Route::get('/users', [UserController::class, 'index'])->middleware('auth');
-Route::get('/roles', [RoleController::class, 'index'])->middleware('auth');
-
-
+Route::middleware('admin')->group(function () {
+    // Route Approval
+    Route::get('/approve-pro', [ApprovalController::class, 'index_pro']);
+    Route::get('/approve-sli', [ApprovalController::class, 'index_sli']);
+    Route::get('/approve-pro-edit-{id}', [ApprovalController::class, 'edit_pro']);
+    Route::put('/approve-pro-update', [ApprovalController::class, 'update_pro']);
+    Route::get('/approve-sli-edit-{id}', [ApprovalController::class, 'edit_sli']);
+    Route::put('/approve-sli-update', [ApprovalController::class, 'update_sli']);
+    // Route User
+    Route::get('/user', [UserController::class, 'index'])->middleware('auth');
+    Route::get('/user-create', [UserController::class, 'create'])->middleware('auth');
+    Route::post('/user-store', [UserController::class, 'store'])->middleware('auth');
+    Route::get('/user-edit-{id}', [UserController::class, 'edit'])->middleware('auth');
+    Route::put('/user-update', [UserController::class, 'update'])->middleware('auth');
+    Route::get('/user-del-{id}', [UserController::class, 'destroy'])->middleware('auth');
+    // Route Role
+    Route::get('/role', [RoleController::class, 'index'])->middleware('auth');
+    Route::get('/role-create', [RoleController::class, 'create'])->middleware('auth');
+    Route::post('/role-store', [RoleController::class, 'store'])->middleware('auth');
+    Route::get('/role-edit-{id}', [RoleController::class, 'edit'])->middleware('auth');
+    Route::put('/role-update', [RoleController::class, 'update'])->middleware('auth');
+    Route::get('/role-del-{id}', [RoleController::class, 'destroy'])->middleware('auth');
+    // Route Category
+    Route::get('/category', [CategoryController::class, 'index'])->middleware('auth');
+    Route::get('/category-create', [CategoryController::class, 'create'])->middleware('auth');
+    Route::post('/category-store', [CategoryController::class, 'store'])->middleware('auth');
+    Route::get('/category-edit-{id}', [CategoryController::class, 'edit'])->middleware('auth');
+    Route::put('/category-update', [CategoryController::class, 'update'])->middleware('auth');
+    Route::get('/category-del-{id}', [CategoryController::class, 'destroy'])->middleware('auth');
+    // Route Delete
+    Route::get('/product-del-{id}', [ProductController::class, 'destroy'])->middleware('auth');
+    Route::get('/slide-del-{id}', [SlideController::class, 'destroy'])->middleware('auth');
+});

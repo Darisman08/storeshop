@@ -8,6 +8,8 @@ class AreaAdminController extends Controller
 {
     public function index()
     {
-        return view('dash');
+        return view('dash', [
+            'active' => 'dash'
+        ]);
     }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Slide;
+use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SlideController extends Controller
 {
@@ -13,7 +17,16 @@ class SlideController extends Controller
      */
     public function index()
     {
-        //
+        $slides = DB::table('slides')
+            ->join('status', 'slides.status_id', '=', 'status.id')
+            ->select('slides.*', 'status.name as sta_name')
+            ->latest()
+            ->get();
+
+        return view('slide.index',  [
+            'slides' => $slides,
+            'active' => 'slide'
+        ]);
     }
 
     /**
@@ -23,7 +36,9 @@ class SlideController extends Controller
      */
     public function create()
     {
-        //
+        return view('slide.create',   [
+            'active' => 'slide'
+        ]);
     }
 
     /**
@@ -34,7 +49,23 @@ class SlideController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validator = $request->validate([
+            'name' => 'required|min:4|max:30',
+            'image' => 'required|image|file|max:1024'            
+        ]);
+         
+        $slideName = $request->name;
+        // if($request->file('image')){
+            $validator['image'] = $request->file('image')->store('slide-images');
+        // }
+        
+        $validator['status_id'] = 3;
+        Slide::create($validator);
+
+        return redirect('/slide')->with('success', 'Slide ' . $slideName . ' Berhasil Ditambahkan!');
+
+              
     }
 
     /**
@@ -43,10 +74,6 @@ class SlideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -56,7 +83,11 @@ class SlideController extends Controller
      */
     public function edit($id)
     {
-        //
+        $slides = Slide::find($id);
+        return view('slide.edit',[
+            'slides' => $slides,
+            'active' => 'slide'
+        ]);        
     }
 
     /**
@@ -66,9 +97,22 @@ class SlideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request)
+    {        
+        $validator = $request->validate ([
+            'name' => 'required|min:4|max:30',
+            'image' => 'image|file|max:1024'
+        ]);
+
+        if($request->file('image')){
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+            $validator['image'] = $request->file('image')->store('slide-images');
+        }        
+
+        Slide::where('id', $request->id)->update($validator);
+        return redirect('/slide')->with('success', 'Slide Berhasil Diubah!');;
     }
 
     /**
@@ -79,6 +123,18 @@ class SlideController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $slide = Slide::find($id);
+        $slideName = $slide->name; 
+
+        // Hapus gambar dari penyimpanan jika ada
+        if ($slide->image) {
+            Storage::delete($slide->image);
+        }
+    
+        // Hapus data dari database
+        $slide->delete();
+        // slide::find($id)->delete();
+        return redirect('/slide')->with('success', 'Slide ' . $slideName . ' Berhasil DiHapus!');
     }
 }
+

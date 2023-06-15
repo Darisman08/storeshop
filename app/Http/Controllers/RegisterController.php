@@ -23,7 +23,8 @@ class RegisterController extends Controller
         ]);
 
         $validateData['password'] = Hash::make($validateData['password']);
-        $validateData['role_id'] = 4;
+        $validateData['role_id'] = 3;
+        $validateData['position'] = 'Customer';
 
         User::create($validateData);
 

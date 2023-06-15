@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,9 +15,11 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = DB::table('roles')->get();
-        
-        return view('users.roles', compact('roles'));
+        $roles = Role::all();
+        return view('role.index', [
+            'roles' => $roles,
+            'active' => 'role'
+        ]);
     }
 
     /**
@@ -26,7 +29,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('role.create', [
+            'active' => 'role'
+        ]);
     }
 
     /**
@@ -37,7 +42,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $request->validate([
+            'name' => 'required|min:4|max:30',
+            'description' => 'required|min:5'
+        ]);
+         
+        $roleName = $request->name;
+       
+        Role::create($validator);
+
+        return redirect('/role')->with('success', 'Role ' . $roleName . ' Berhasil Ditambahkan!');
     }
 
     /**
@@ -59,7 +73,11 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $roles = Role::find($id);
+        return view('role.edit', [
+            'roles' => $roles,
+            'active' => 'role'
+        ]);
     }
 
     /**
@@ -69,9 +87,15 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validator = $request->validate ([
+            'name' => 'required|min:4|max:30',
+            'description' => 'required|min:5',
+        ]);        
+
+        Role::where('id', $request->id)->update($validator);
+        return redirect('/role')->with('success', 'Role Berhasil Diubah!');
     }
 
     /**
@@ -82,6 +106,12 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::find($id);
+        $roleName = $role->name; 
+
+        // Hapus data dari database
+        $role->delete();
+        // role::find($id)->delete();
+        return redirect('/role')->with('success', 'Role ' . $roleName . ' Berhasil DiHapus!');
     }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('cat_id')->constrained('categories');
             $table->string('image')->nullable();
             $table->text('description');
-            $table->integer('price');
+            $table->string('price');
             $table->foreignId('status_id')->constrained('status');
             $table->timestamps();
         });

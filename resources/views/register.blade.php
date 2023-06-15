@@ -2,95 +2,152 @@
 <html lang="en">
 
 <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Register</title>
-    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 11]>
-  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="">
-    <meta name="author" content="Phoenixcoded" />
-    <!-- Favicon icon -->
-    <link rel="icon" href="admin/assets/images/favicon.icon" type="image/x-icon">
+  <title>Pages / Register - Gaming Store</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-    <!-- vendor css -->
-    <link rel="stylesheet" href="admin/assets/css/style.css">
+  <!-- Favicons -->
+  <link href="dashadmin/assets/img/favicon.png" rel="icon">
+  <link href="dashadmin/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="dashadmin/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="dashadmin/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="dashadmin/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="dashadmin/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="dashadmin/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="dashadmin/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="dashadmin/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="dashadmin/assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: May 30 2023 with Bootstrap v5.3.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
-<!-- [ auth-signup ] start -->
-<div class="auth-wrapper">
-    <div class="auth-content text-center">
-        <a href="/"><img src="admin/assets/images/logo.png" alt="" class="img-fluid mb-4"></a>
-        <div class="card borderless">
-            <div class="row align-items-center text-center">
-                <div class="col-md-12">
-                    <div class="card-body">
-                        <h4 class="f-w-400">Register</h4>
-                        <form action="/register" method="post">
-                            @csrf
-                            <hr>
-                            <div class="form-group mb-3">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    name="name" id="name" placeholder="Nama" required value="{{ old('name') }}">
-                                @error('name')
+<body>
+
+  <main>
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a href="/" class="logo d-flex align-items-center w-auto">
+                  <img src="dashadmin/assets/img/logo.png" alt="">
+                  <span class="d-none d-lg-block">Console Land Store</span>
+                </a>
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                    <p class="text-center small">Enter your personal details to create account</p>
+                  </div>
+
+                  <form action="/register" method="post" class="row g-3 needs-validation">
+                    @csrf
+                    <div class="col-12">
+                      <label for="name" class="form-label">Full Name</label>
+                      <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" required>
+                      @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
-                            <div class="form-group mb-3">
-                                <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" id="email" placeholder="Email" required value="{{ old('email') }}">
-                                @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-4">
-                                <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                    name="password" id="password" placeholder="Password" required>
-                                @error('password')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-4">
-                                <input type="text" class="form-control @error('address') is-invalid @enderror"
-                                    name="address" id="address" placeholder="Alamat" required value="{{ old('address') }}">
-                                @error('address')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <button class="btn btn-primary btn-block mb-4" type="submit">Register</button>
-                            <hr>
-                        </form>
-                        <p class="mb-2">Already have an account? <a href="/login" class="f-w-400">Login</a></p>
                     </div>
+
+                    <div class="col-12">
+                      <label for="email" class="form-label">Your Email</label>
+                      <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" required>
+                      @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                    </div>
+
+                    <div class="col-12">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" required>
+                      @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                    </div>
+
+                    <div class="col-12">
+                      <label for="address" class="form-label">Address</label>
+                      <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" id="address" required>
+                      @error('address')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                    </div>
+
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Already have an account? <a href="/login">Log in</a></p>
+                    </div>
+                  </form>
+
                 </div>
+              </div>
+
+              <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                Designed by <a href="https://consoleland.web.id/">Console Land Store</a>
+              </div>
+
             </div>
+          </div>
         </div>
+
+      </section>
+
     </div>
-</div>
-<!-- [ auth-signup ] end -->
+  </main><!-- End #main -->
 
-<!-- Required Js -->
-<script src="admin/assets/js/vendor-all.min.js"></script>
-<script src="admin/assets/js/plugins/bootstrap.min.js"></script>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-<script src="admin/assets/js/pcoded.min.js"></script>
+  <!-- Vendor JS Files -->
+  <script src="dashadmin/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="dashadmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="dashadmin/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="dashadmin/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="dashadmin/assets/vendor/quill/quill.min.js"></script>
+  <script src="dashadmin/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="dashadmin/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="dashadmin/assets/vendor/php-email-form/validate.js"></script>
 
-
+  <!-- Template Main JS File -->
+  <script src="dashadmin/assets/js/main.js"></script>
 
 </body>
 

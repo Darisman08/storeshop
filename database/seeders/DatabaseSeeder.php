@@ -18,15 +18,14 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         DB::table('roles')->insert([
-            ['name' => ('Manager')],
-            ['name' => ('Admin')],
-            ['name' => ('Staff')],
-            ['name' => ('User')]
+            ['name' => ('Admin'),'description' => ('User Full Akses')],
+            ['name' => ('Staff'),'description' => ('User Staff Akses')],
+            ['name' => ('User'),'description' => ('User')]
         ]);
         DB::table('categories')->insert([
-            ['name' => ('Software')],
-            ['name' => ('Souvenir')],
-            ['name' => ('Makanan')]
+            ['name' => ('Console'),'description' => ('Console game: PS,Nintendo,XBOX, dll')],
+            ['name' => ('Game'),'description' => ('Koleksi Game')],
+            ['name' => ('Accessories'),'description' => ('Pelengkapan Game: Fan Cooling, Stik/gamepad, Steering Wheel, dll')]
         ]);
         DB::table('status')->insert([
             ['name' => ('Accepted')],
@@ -34,11 +33,12 @@ class DatabaseSeeder extends Seeder
             ['name' => ('Waiting')]
         ]);
         User::create([
-            'name' => 'Master',
+            'name' => 'Aris Darisman',
             'email' => 'master@master.com',
             'password' => bcrypt('master'),
             'role_id' => 1,
-            'address' => 'Jakarta'
+            'address' => 'Jakarta',
+            'position' => 'Manager'
         ]);
         
 

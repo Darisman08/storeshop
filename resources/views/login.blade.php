@@ -49,9 +49,9 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
-                <a href="/" class="logo d-flex align-items-center w-auto">
-                  <img src="dashadmin/assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Console Land Store</span>
+                <a href="/" class="d-flex align-items-center w-auto">
+                  <img src="dashadmin/assets/img/logo_console.png" alt="">
+                  {{-- <span class="d-none d-lg-block">Console Land Store</span> --}}
                 </a>
               </div><!-- End Logo -->
 
@@ -115,7 +115,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Designed by <a href="https://consoleland.web.id/">Console Land Store</a>
+                Designed by <a href="https://consoleland.my.id/">Console Land Store</a>
               </div>
 
             </div>

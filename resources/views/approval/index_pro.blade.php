@@ -42,7 +42,7 @@
                             <td><img src="{{ asset('storage/' . $item->image) }}" width="50" height="50">
                             </td>
                             <td>{{ $item->description }}</td>
-                            <td>{{ $item->price }}</td>
+                            <td>Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
                             <td>{{ $item->sta_name }}</td>
                             <td>
                                 <form action="/approve-pro-update" class="d-inline" method="post">

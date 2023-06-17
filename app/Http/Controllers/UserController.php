@@ -119,13 +119,11 @@ class UserController extends Controller
         'position' => 'required|min:2',            
     ]);
 
-    if ($request->file('image')) {
-        if ($request->oldImage) {
+    if($request->file('image')){
+        if($request->oldImage){
             Storage::delete($request->oldImage);
         }
-        $validator['image'] = $request->file('image')->store('user-images');
-    } else {
-        unset($validator['image']); // Menghapus kunci 'image' dari array validator jika tidak ada file gambar yang diunggah
+        $validator['image'] = $request->file('image')->store('product-images');
     }
 
     $user = User::findOrFail($request->id);

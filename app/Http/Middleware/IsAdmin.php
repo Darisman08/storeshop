@@ -16,7 +16,8 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!auth()->check() || auth()->user()->role_id !== 1){
+        $allowedRoles = [1];
+        if (!auth()->check() || !in_array(auth()->user()->role_id, $allowedRoles)) {
             abort(403);
         }
         return $next($request);

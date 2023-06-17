@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $slides = Slide::all();
+        $slides = Slide::where('status_id',1)->get();
         $products = Product::where('status_id',1)->get();
         return view('landing', [
             'slides' => $slides,

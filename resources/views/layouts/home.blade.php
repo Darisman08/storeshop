@@ -48,7 +48,7 @@
 
                     <!-- Logo desktop -->
                     <a href="/" class="logo">
-                        <img src="home/assets/images/icons/logo-01.png" alt="IMG-LOGO">
+                        <img src="home/assets/images/icons/logo_console.png" alt="IMG-LOGO">
                     </a>
 
                     <!-- Menu desktop -->
@@ -60,11 +60,11 @@
                             <li class="label1" data-label1="hot">
                                 <a href="#product-section">Product</a>
                             </li>
-                            @auth
+                            @can('staff')
                                 <li>
                                     <a href="/dash">Admin Area</a>
                                 </li>
-                            @endauth
+                            @endcan                            
                         </ul>
                     </div>
 
@@ -77,7 +77,10 @@
                                     <a href="">Welcome back, {{ auth()->user()->name }}</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('/logout') }}">Logout</a>
+                                    <a href="/profile">My Profile</a>
+                                </li>
+                                <li>
+                                    <a href="/logout">Logout</a>
                                 </li>
                             @else
                                 <li>
@@ -94,7 +97,7 @@
         <div class="wrap-header-mobile">
             <!-- Logo moblie -->
             <div class="logo-mobile">
-                <a href="index.html"><img src="home/assets/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+                <a href="index.html"><img src="home/assets/images/icons/logo_console.png" alt="IMG-LOGO"></a>
             </div>
             <!-- Button show menu -->
             <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
@@ -111,6 +114,9 @@
                 @auth
                     <li>
                         <a href="">Welcome back, {{ auth()->user()->name }}</a>
+                    </li>
+                    <li>
+                        <a href="/profile">My Profile</a>
                     </li>
                 @endauth
                 <li>
@@ -159,7 +165,7 @@
         <div class="wrap-slick1 rs2-slick1">
             <div class="slick1">
                 @foreach ($slides as $item)
-                    <div class="item-slick1 bg-overlay1"
+                    <div class="thumb-image item-slick1 bg-overlay1"
                         style="background-image: url({{ asset('storage/' . $item->image) }});"
                         data-thumb="{{ asset('storage/' . $item->image) }}" data-caption="{{ $item->name }}">
                         <div class="container h-full">
@@ -291,232 +297,35 @@
                     @endforeach
                 </div>
 
-                <div class="flex-w flex-c-m m-tb-10">
-                    <div
-                        class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-                        <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-                        <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-                        Filter
-                    </div>
-
-                    <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-                        <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-                        <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-                        Search
-                    </div>
-                </div>
-
-                <!-- Search product -->
-                <div class="dis-none panel-search w-full p-t-10 p-b-15">
-                    <div class="bor8 dis-flex p-l-15">
-                        <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-                            <i class="zmdi zmdi-search"></i>
-                        </button>
-
-                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product"
-                            placeholder="Search">
-                    </div>
-                </div>
-
-                <!-- Filter -->
-                <div class="dis-none panel-filter w-full p-t-10">
-                    <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
-                        <div class="filter-col1 p-r-15 p-b-27">
-                            <div class="mtext-102 cl2 p-b-15">
-                                Sort By
+                {{-- <div class="flex-w flex-c-m m-tb-10">
+                    <form action="/landing" method="GET">
+                        <div class="flex-w flex-c-m m-tb-10">
+                            <div class="m-r-15">
+                                <label for="customRangeMin" class="form-label">Harga Min:</label>
+                                <input type="range" class="form-range" id="customRangeMin" name="min_price" min="0" max="20000000"
+                                    value="{{ $minPrice ?? 0 }}">
+                                <span id="minPriceValue">Rp. {{ number_format($minPrice ?? 0, 0, ',', '.') }}</span> Juta
                             </div>
-
-                            <ul>
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Default
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Popularity
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Average rating
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-                                        Newness
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Price: Low to High
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Price: High to Low
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="filter-col2 p-r-15 p-b-27">
-                            <div class="mtext-102 cl2 p-b-15">
-                                Price
+                            <div class="m-r-15">
+                                <label for="customRangeMax" class="form-label">Harga Max:</label>
+                                <input type="range" class="form-range" id="customRangeMax" name="max_price" min="0" max="20000000"
+                                    value="{{ $maxPrice ?? 0 }}">
+                                <span id="maxPriceValue">Rp. {{ number_format($maxPrice ?? 0, 0, ',', '.') }}</span> Juta
                             </div>
-
-                            <ul>
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-                                        All
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $0.00 - $50.00
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $50.00 - $100.00
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $100.00 - $150.00
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $150.00 - $200.00
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $200.00+
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="filter-col3 p-r-15 p-b-27">
-                            <div class="mtext-102 cl2 p-b-15">
-                                Color
-                            </div>
-
-                            <ul>
-                                <li class="p-b-6">
-                                    <span class="fs-15 lh-12 m-r-6" style="color: #222;">
-                                        <i class="zmdi zmdi-circle"></i>
-                                    </span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Black
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <span class="fs-15 lh-12 m-r-6" style="color: #4272d7;">
-                                        <i class="zmdi zmdi-circle"></i>
-                                    </span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-                                        Blue
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <span class="fs-15 lh-12 m-r-6" style="color: #b3b3b3;">
-                                        <i class="zmdi zmdi-circle"></i>
-                                    </span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Grey
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <span class="fs-15 lh-12 m-r-6" style="color: #00ad5f;">
-                                        <i class="zmdi zmdi-circle"></i>
-                                    </span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Green
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <span class="fs-15 lh-12 m-r-6" style="color: #fa4251;">
-                                        <i class="zmdi zmdi-circle"></i>
-                                    </span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Red
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <span class="fs-15 lh-12 m-r-6" style="color: #aaa;">
-                                        <i class="zmdi zmdi-circle-o"></i>
-                                    </span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        White
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="filter-col4 p-b-27">
-                            <div class="mtext-102 cl2 p-b-15">
-                                Tags
-                            </div>
-
-                            <div class="flex-w p-t-4 m-r--5">
-                                <a href="#"
-                                    class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Fashion
-                                </a>
-
-                                <a href="#"
-                                    class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Lifestyle
-                                </a>
-
-                                <a href="#"
-                                    class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Denim
-                                </a>
-
-                                <a href="#"
-                                    class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Streetstyle
-                                </a>
-
-                                <a href="#"
-                                    class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Crafts
-                                </a>
+                            <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4">
+                                <button type="submit" class="bg0">Search</button>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </form>
+                </div> --}}
+                
+                
+                
+                
             </div>
-
             <div class="row isotope-grid">
                 @foreach ($products as $item)
-                    <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{ $item->cat_id }}"
-                        style="width: 200px; height: 200px; object-fit: cover;">
+                    <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{ $item->cat_id }}">
                         <!-- Block2 -->
                         <div class="block2">
                             <div class="block2-pic hov-img0">
@@ -524,7 +333,7 @@
 
                                 <a href="#"
                                     class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
+                                    {{ $item->description }}
                                 </a>
                             </div>
 
@@ -534,12 +343,19 @@
                                         class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                         {{ $item->name }}
                                     </a>
-
                                     <span class="stext-105 cl3">
                                         Rp. {{ number_format($item->price, 0, ',', '.') }}
                                     </span>
                                 </div>
-                            </div>
+                                <div class="block2-txt-child2 flex-r p-t-3">
+                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                        <img class="icon-heart1 dis-block trans-04"
+                                            src="home/assets/images/icons/icon-heart-01.png" alt="ICON">
+                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                                            src="home/assets/images/icons/icon-heart-02.png" alt="ICON">
+                                    </a>
+                                </div>
+                            </div>                      
                         </div>
                     </div>
                 @endforeach
@@ -587,7 +403,7 @@
             Copyright &copy;
             <script>
                 document.write(new Date().getFullYear());
-            </script> All rights reserved | Made by <a href="https://consoleland.web.id"
+            </script> All rights reserved | Made by <a href="https://consoleland.my.id"
                 target="_blank">Console Land Store</a>
         </p>
     </footer>
@@ -666,6 +482,31 @@
     </script>
     <!--===============================================================================================-->
     <script src="home/assets/js/main.js"></script>
+    {{-- <script>
+        var minRangeInput = document.getElementById('customRangeMin');
+        var minPriceValue = document.getElementById('minPriceValue');
+    
+        minRangeInput.addEventListener('input', function() {
+            var value = parseFloat(minRangeInput.value);
+            minPriceValue.textContent = 'Rp. ' + formatCurrency(value) + ',-';
+        });
+    
+        var maxRangeInput = document.getElementById('customRangeMax');
+        var maxPriceValue = document.getElementById('maxPriceValue');
+    
+        maxRangeInput.addEventListener('input', function() {
+            var value = parseFloat(maxRangeInput.value);
+            maxPriceValue.textContent = 'Rp. ' + formatCurrency(value) + ',-';
+        });
+    
+        function formatCurrency(amount) {
+            var formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            });
+            return formatter.format(amount);
+        }
+    </script> --}}
 
 </body>
 

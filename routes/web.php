@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SlideController;
@@ -31,8 +32,9 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth');
 
-Route::middleware('staff')->group(function () {
+Route::middleware('isstaff')->group(function () {
     // Route Product
     Route::get('/product', [ProductController::class, 'index'])->middleware('auth');
     Route::get('/product-create', [ProductController::class, 'create'])->middleware('auth');
@@ -46,17 +48,17 @@ Route::middleware('staff')->group(function () {
     Route::get('/slide-edit-{id}', [SlideController::class, 'edit'])->middleware('auth');
     Route::put('/slide-update', [SlideController::class, 'update'])->middleware('auth');
     // Route Dashboard
-    Route::get('/dash', [AreaAdminController::class, 'index']);
+    Route::get('/dash', [AreaAdminController::class, 'index'])->middleware('auth');
 });
 
-Route::middleware('admin')->group(function () {
+Route::middleware('isadmin')->group(function () {
     // Route Approval
-    Route::get('/approve-pro', [ApprovalController::class, 'index_pro']);
-    Route::get('/approve-sli', [ApprovalController::class, 'index_sli']);
-    Route::get('/approve-pro-edit-{id}', [ApprovalController::class, 'edit_pro']);
-    Route::put('/approve-pro-update', [ApprovalController::class, 'update_pro']);
-    Route::get('/approve-sli-edit-{id}', [ApprovalController::class, 'edit_sli']);
-    Route::put('/approve-sli-update', [ApprovalController::class, 'update_sli']);
+    Route::get('/approve-pro', [ApprovalController::class, 'index_pro'])->middleware('auth');
+    Route::get('/approve-sli', [ApprovalController::class, 'index_sli'])->middleware('auth');
+    Route::get('/approve-pro-edit-{id}', [ApprovalController::class, 'edit_pro'])->middleware('auth');
+    Route::put('/approve-pro-update', [ApprovalController::class, 'update_pro'])->middleware('auth');
+    Route::get('/approve-sli-edit-{id}', [ApprovalController::class, 'edit_sli'])->middleware('auth');
+    Route::put('/approve-sli-update', [ApprovalController::class, 'update_sli'])->middleware('auth');
     // Route User
     Route::get('/user', [UserController::class, 'index'])->middleware('auth');
     Route::get('/user-create', [UserController::class, 'create'])->middleware('auth');

@@ -47,9 +47,9 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="/dash" class="logo d-flex align-items-center">
-                <img src="dashadmin/assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Console Land</span>
+            <a href="/dash" class=" d-flex align-items-center">
+                <img src="dashadmin/assets/img/logo_console.png" alt="">
+                {{-- <span class="d-none d-lg-block">Console Land</span> --}}
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -110,34 +110,36 @@
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
-
+            @can('staff')
             <li class="nav-item">
                 <a class="nav-link {{ $active === 'dash' ? '' : 'collapsed' }}" href="/dash">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link {{ $active == 'product' || $active == 'category' ? '' : 'collapsed' }}"
-                    data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-playstation"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav"
-                    class="nav-content collapse {{ $active == 'product' || $active == 'category' ? 'show' : '' }}"
-                    data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="/product" class="{{ $active === 'product' ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>List Product</span>
-                        </a>
-                    </li>
-                    @can('admin')
-                    <li>
-                        <a href="/category" class="{{ $active === 'category' ? 'active' : '' }}">
-                            <i class="bi bi-circle"></i><span>Category</span>
-                        </a>
-                    </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link {{ $active == 'product' || $active == 'category' ? '' : 'collapsed' }}"
+                        data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-playstation"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="components-nav"
+                        class="nav-content collapse {{ $active == 'product' || $active == 'category' ? 'show' : '' }}"
+                        data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="/product" class="{{ $active === 'product' ? 'active' : '' }}">
+                                <i class="bi bi-circle"></i><span>List Product</span>
+                            </a>
+                        </li>
                     @endcan
+                    @can('admin')
+                        <li>
+                            <a href="/category" class="{{ $active === 'category' ? 'active' : '' }}">
+                                <i class="bi bi-circle"></i><span>Category</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('staff')
                 </ul>
             </li><!-- End Components Nav -->
 
@@ -147,48 +149,49 @@
                     <span>Slider</span>
                 </a>
             </li>
+            @endcan
             @can('admin')
-            <li class="nav-item">
-                <a class="nav-link {{ $active == 'approve-pro' || $active == 'approve-sli' ? '' : 'collapsed' }}"
-                    data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-send-check"></i><span>Approval</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav"
-                    class="nav-content collapse {{ $active == 'approve-pro' || $active == 'approve-sli' ? 'show' : '' }}"
-                    data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a class="{{ $active === 'approve-pro' ? 'active' : '' }}" href="/approve-pro">
-                            <i class="bi bi-circle"></i><span>Product</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="{{ $active === 'approve-sli' ? 'active' : '' }}" href="/approve-sli">
-                            <i class="bi bi-circle"></i><span>Slider</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Forms Nav -->
+                <li class="nav-item">
+                    <a class="nav-link {{ $active == 'approve-pro' || $active == 'approve-sli' ? '' : 'collapsed' }}"
+                        data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-send-check"></i><span>Approval</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="forms-nav"
+                        class="nav-content collapse {{ $active == 'approve-pro' || $active == 'approve-sli' ? 'show' : '' }}"
+                        data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a class="{{ $active === 'approve-pro' ? 'active' : '' }}" href="/approve-pro">
+                                <i class="bi bi-circle"></i><span>Product</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{ $active === 'approve-sli' ? 'active' : '' }}" href="/approve-sli">
+                                <i class="bi bi-circle"></i><span>Slider</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- End Forms Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link {{ $active == 'user' || $active == 'role' ? '' : 'collapsed' }}"
-                    data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-person-gear"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="tables-nav"
-                    class="nav-content collapse {{ $active == 'user' || $active == 'role' ? 'show' : '' }}"
-                    data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a class="{{ $active === 'user' ? 'active' : '' }}" href="/user">
-                            <i class="bi bi-circle"></i><span>List Users</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="{{ $active === 'role' ? 'active' : '' }}" href="/role">
-                            <i class="bi bi-circle"></i><span>Role Users</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Tables Nav -->
+                <li class="nav-item">
+                    <a class="nav-link {{ $active == 'user' || $active == 'role' ? '' : 'collapsed' }}"
+                        data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-person-gear"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="tables-nav"
+                        class="nav-content collapse {{ $active == 'user' || $active == 'role' ? 'show' : '' }}"
+                        data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a class="{{ $active === 'user' ? 'active' : '' }}" href="/user">
+                                <i class="bi bi-circle"></i><span>List Users</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{ $active === 'role' ? 'active' : '' }}" href="/role">
+                                <i class="bi bi-circle"></i><span>Role Users</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- End Tables Nav -->
             @endcan
 
             <li class="nav-heading">Pages</li>
@@ -240,7 +243,7 @@
             <!-- You can delete the links only if you purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://consoleland.web.id/">Console Land Store</a>
+            Designed by <a href="https://consoleland.my.id/">Console Land Store</a>
         </div>
     </footer><!-- End Footer -->
 

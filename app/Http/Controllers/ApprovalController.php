@@ -20,7 +20,7 @@ class ApprovalController extends Controller
             ->join('categories', 'products.cat_id', '=', 'categories.id')
             ->join('status', 'products.status_id', '=', 'status.id')
             ->select('products.*', 'categories.name as cat_name', 'status.name as sta_name')
-            ->latest()
+            ->orderByDesc('status_id')
             ->get();
 
         return view('approval.index_pro', [

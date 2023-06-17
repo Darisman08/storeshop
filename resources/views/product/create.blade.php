@@ -18,7 +18,7 @@
             <div class="col-md-4">
                 <label for="name" class="form-label">Product Name</label>
                 <input type="name" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
-                    required autofocus>
+                value="{{ old('name') }}"  required autofocus>
                 @error('name')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -26,7 +26,7 @@
             <div class="col-md-4">
                 <label for="price" class="form-label">Price</label>
                 <input type="text" class="form-control @error('price') is-invalid @enderror" id="price"
-                    name="price" required>
+                    name="price" value="{{ old('price') }}" required>
                 @error('price')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

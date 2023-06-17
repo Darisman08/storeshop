@@ -36,7 +36,7 @@
                             <td>{{ $loop->iteration }}.</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->sta_name }}</td>
-                            <td><img src="{{ asset('storage/' . $item->image) }}" width="50" height="50">
+                            <td><img src="{{ asset('storage/' . $item->image) }}" width="100" height="50">
                             </td>
                             <td>
                                 <form action="/approve-sli-update" class="d-inline" method="post">

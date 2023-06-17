@@ -37,7 +37,7 @@
                             <td>{{ $loop->iteration }}.</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->sta_name }}</td>
-                            <td><img src="{{ asset('storage/' . $item->image) }}" width="50" height="50">
+                            <td><img src="{{ asset('storage/' . $item->image) }}" width="100" height="50">
                             </td>
                             <td>
                                 <a class="btn btn-success btn-sm bi bi-pencil-square" href="/slide-edit-{{ $item->id }}"> Edit</a>
